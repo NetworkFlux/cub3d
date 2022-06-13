@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: npinheir <npinheir@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 14:22:12 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/09 16:59:33 by swautele         ###   ########.fr       */
+/*   Updated: 2022/06/09 17:43:23 by npinheir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 # define SIZE 64
 # define ANGLEVISION 60
-# define ECAR 0.005
+# define ECAR 0.05
 # define NBRAY ANGLEVISION / ECAR
 # define SCREEN_HEIGHT 900
 # define SCREEN_WIDTH 900
