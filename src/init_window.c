@@ -6,7 +6,7 @@
 /*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 19:13:03 by simonwautel       #+#    #+#             */
-/*   Updated: 2022/06/09 16:56:46 by swautele         ###   ########.fr       */
+/*   Updated: 2022/06/11 17:44:31 by swautele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,26 @@ int	keyboard(int keycode, t_param *world)
 {
 	/*	All action that can possibly be made by the player	*/
 
-	//printf("Keycode %d\n", keycode);
+	// printf("Keycode %d\n", keycode);
 	if (keycode == 0)
-		world->orient = (world->orient + 5) % 360;
+		world->orient = (world->orient + 9) % 360;
 	if (keycode == 2)
-		world->orient = (world->orient - 5) % 360;
-	if (keycode == 13)
+	{
+		world->orient = world->orient - 9;
+		if (world->orient < 0)
+			world->orient += 360;
+	}
+	if (keycode == 13 || keycode == 126)
 		move_forward(world);
 	if (keycode == 53)
 		exit_cub3d(world);
-	draw_view(world);
+	if (keycode == 123)
+		move_left(world);
+	if (keycode == 124)
+		move_right(world);
+	if (keycode == 1 || keycode == 125)
+		move_back(world);
+	// draw_view(world);
 	return (0);
 }
 
@@ -60,6 +70,7 @@ void	init_window(t_param *world)
 		world->texture[EA].addr = mlx_get_data_addr(world->texture[EA].img, &world->texture[EA].bits_per_pixel, &world->texture[EA].line_length, &world->texture[EA].endian);
 		draw_view(world);
 		mlx_hook(world->window, 2, 1L<<0, keyboard, world);
+		mlx_hook(world->window, 17, 1L<<5, exit_cub3d, world);
 		mlx_loop_hook(world->video, draw_view, world);
 		mlx_loop(world->video);
 	}
@@ -80,8 +91,8 @@ int	draw_view(t_param *world)
 	while (offset >= 0)
 	{
 		// printf("offset = %f", offset);
-		dist = calcul_dist_till_wall(world, world->orient - offset + (ANGLEVISION / 2), &x_wall);
-		if ((int)offset == 30)
+		dist = calcul_dist_till_wall(world, world->orient - offset + MID, &x_wall);
+		if ((int)offset == MID)
 		{
 			// printf("i init p_front\n");
 			world->player_front = dist;
@@ -91,6 +102,10 @@ int	draw_view(t_param *world)
 		draw_col(world, dist, offset, x_wall);
 		offset -= ECAR;
 	}
+	world->player_left = calcul_dist_till_wall(world, world->orient + 90, &x_wall);
+	world->player_right = calcul_dist_till_wall(world, world->orient - 90, &x_wall);
+	// printf("player_back = %f	back = %d", world->player_back, world->orient + 90);
+	world->player_back = calcul_dist_till_wall(world, world->orient - 180, &x_wall);
 	// dist = calcul_dist_till_wall(world, world->p_orient);
 	// world->p_front = dist;
 	draw_minimap(world);
@@ -104,14 +119,14 @@ void	draw_col(t_param *world, double dist, double offset, double x_wall)
 	int	y;
 	int	offset_wall;
 	int	mid;
-	int	x_texture;
+	double	x_texture;
 	double	y_texture;
 	// int	i;
 
-	x = (SCREEN_WIDTH / ANGLEVISION) * (offset);
+	x = SCREEN_WIDTH * offset / ANGLEVISION;
 	y = 0;
-	offset_wall = ((SCREEN_HEIGHT / 2) / (dist / 30));
-	mid = SCREEN_HEIGHT / 2;
+	offset_wall = SCREEN_HEIGHT * 15 / dist;
+	mid = HALF_SCREEN;
 	y_texture = 0;
 	// printf("mid = %d, offset_wall = %d dist = %f\n", mid, offset_wall, dist);
 	while (y <= SCREEN_HEIGHT)
@@ -132,13 +147,13 @@ void	draw_col(t_param *world, double dist, double offset, double x_wall)
 		{
 			// i = -1;
 			// while (++i < (SCREEN_WIDTH - 1) / NBRAY)
-			x_texture = x_wall * world->texture[world->flag_wall].x_size / 64;
+			x_texture = x_wall * world->texture[world->flag_wall].x_size / SIZE;
 			y_texture += (double)(world->texture[world->flag_wall].y_size) / (double)((offset_wall * 2));
-			if (y_texture > world->texture[world->flag_wall].y_size)
+			if (y_texture >= world->texture[world->flag_wall].y_size)
 				y_texture = world->texture[world->flag_wall].y_size - 1;
-		// printf("%f\n", (double)(offset_wall * 2) );
 			pixel_to_image(world->img, x, y, get_color_from_img(&world->texture[world->flag_wall], x_texture, y_texture));
 		}
 		y++;
 	}
+// printf("%f\n", x_wall);
 }

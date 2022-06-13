@@ -6,7 +6,7 @@
 /*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:33:12 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/09 16:46:17 by swautele         ###   ########.fr       */
+/*   Updated: 2022/06/10 15:02:31 by swautele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ size_t	len_array_2d(char **split)
 	return (res);
 }
 
-void	exit_cub3d(t_param *world)
+int	exit_cub3d(t_param *world)
 {
 	mlx_destroy_image(world->video, world->img->img);
 	mlx_destroy_image(world->video, world->clean);
@@ -51,6 +51,7 @@ void	exit_cub3d(t_param *world)
 	free(world->img);
 	free(world);
 	exit(0);
+	return (0);
 }
 
 int	create_trgb(int t, int r, int g, int b)

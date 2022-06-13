@@ -6,7 +6,7 @@
 /*   By: npinheir <npinheir@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 14:22:12 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/09 17:43:23 by npinheir         ###   ########.fr       */
+/*   Updated: 2022/06/13 10:26:07 by npinheir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,12 @@
 # define ECAR 0.05
 # define NBRAY ANGLEVISION / ECAR
 # define SCREEN_HEIGHT 900
-# define SCREEN_WIDTH 900
+# define SCREEN_WIDTH 1200
 # define NOSE 20
 # define MOVE 8
+# define MID ANGLEVISION / 2
+# define LIMIT MOVE * 3
+# define HALF_SCREEN SCREEN_HEIGHT / 2
 
 typedef enum e_bool
 {
@@ -97,11 +100,14 @@ void	draw_col(t_param *world, double dist, double offset, double x_wall);
 // Hooks
 int		keyboard(int keycode, t_param *world);
 void	move_forward(t_param *world);
+void	move_left(t_param *world);
+void	move_right(t_param *world);
+void	move_back(t_param *world);
 
 // Minimap
 void	draw_minimap(t_param *world);
 void	paint_square_map(unsigned int x, unsigned int y, unsigned int square_length, t_param *world);
-void	draw_player_nose(t_param *world);
+void	draw_player_nose(t_param *world, unsigned int square_length);
 
 // Distance
 double	calcul_dist_till_wall(t_param *world, double orientation, double *x_wall);
@@ -109,10 +115,10 @@ double	next_vert_wall(t_param *world, double orientation, double *vert_x_wall);
 double	next_hor_wall(t_param *world, double orientation, double *hor_x_wall);
 
 // Walls
-int		check_left_wall(int x, int y, t_param *world);
-int		check_right_wall(int x, int y, t_param *world);
-int		check_up_wall(int y, int x, t_param *world);
-int		check_down_wall(int y, int x, t_param *world);
+int		check_left_wall(double x, double y, t_param *world);
+int		check_right_wall(double x, double y, t_param *world);
+int		check_up_wall(double y, double x, t_param *world);
+int		check_down_wall(double y, double x, t_param *world);
 
 // .cub file
 void	cub_file_check_and_fill(t_param *world, char *path);
@@ -136,7 +142,7 @@ int		to_hex_int(const char *str, t_param *world);
 size_t	len_array_2d(char **split);
 int		create_trgb(int t, int r, int g, int b);
 void	pixel_to_image(t_data *img, int x, int y, int color);
-void	exit_cub3d(t_param *world);
+int		exit_cub3d(t_param *world);
 double	degre_to_radiant(double degre);
 void	bresenham(int x0, int y0, int x1, int y1, t_param *world);
 char	*space_string(size_t len, t_param *world);
@@ -149,4 +155,3 @@ void	error_exit(char *message, t_param *world);
 
 //to_do
 // check texture existe
-// finish movements

@@ -6,7 +6,7 @@
 /*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 12:03:54 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/09 14:00:02 by swautele         ###   ########.fr       */
+/*   Updated: 2022/06/10 13:51:03 by swautele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ void	paint_square_map(unsigned int x, unsigned int y, unsigned int square_length
 	}
 }
 
-void	draw_player_nose(t_param *world)
+void	draw_player_nose(t_param *world, unsigned int square_length)
 {
 	// end point = x = r cosθ and y = r sinθ
 	unsigned int	new_x;
 	unsigned int	new_y;
 
-	new_x = world->map_x_pos + (world->player_front / 7 * cos(degre_to_radiant(world->orient)));
-	new_y = world->map_y_pos - (world->player_front / 7 * sin(degre_to_radiant(world->orient)));
+	new_x = world->map_x_pos + (world->player_front * square_length / (SIZE) * cos(degre_to_radiant(world->orient)));
+	new_y = world->map_y_pos - (world->player_front * square_length/ (SIZE) * sin(degre_to_radiant(world->orient)));
 	bresenham(world->map_x_pos, world->map_y_pos, new_x, new_y, world);
 }
 
@@ -71,7 +71,7 @@ void	draw_player(t_param *world, unsigned int square_length)
 		i++;
 	}
 	//world->p_x_mid = world->p_map_x + world->p_size;
-	draw_player_nose(world);
+	draw_player_nose(world, square_length);
 }
 
 void	draw_minimap(t_param *world)
