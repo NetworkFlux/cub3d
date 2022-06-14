@@ -6,7 +6,7 @@
 /*   By: npinheir <npinheir@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/21 18:35:37 by npinheir          #+#    #+#             */
-/*   Updated: 2021/08/22 16:15:58 by npinheir         ###   ########.fr       */
+/*   Updated: 2022/06/14 14:08:50 by npinheir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_atoi(const char *str)
 
 	sign = 1;
 	res = ft_atoi2(str, &sign);
-	if (res > __LONG_LONG_MAX__)
+	if (res > 2147483647)
 	{
 		if (sign == 1)
 			return (-1);

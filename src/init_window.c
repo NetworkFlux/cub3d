@@ -6,7 +6,7 @@
 /*   By: npinheir <npinheir@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 19:13:03 by simonwautel       #+#    #+#             */
-/*   Updated: 2022/06/14 12:39:21 by npinheir         ###   ########.fr       */
+/*   Updated: 2022/06/14 21:28:03 by npinheir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ int	keyboard(int keycode, t_param *world)
 {
 	/*	All action that can possibly be made by the player	*/
 
-	if (keycode == 0)
-		world->orient = (world->orient + 5) % 360;
-	if (keycode == 2)
+	if (keycode == 123)
+		world->orient = (world->orient + 9) % 360;
+	if (keycode == 124)
 	{
-		world->orient = world->orient - 5;
+		world->orient = world->orient - 9;
 		if (world->orient < 0)
 			world->orient += 360;
 	}

@@ -3,21 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: npinheir <npinheir@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:33:12 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/13 12:30:28 by swautele         ###   ########.fr       */
+/*   Updated: 2022/06/14 15:09:46 by npinheir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+void	check_max_int(long long int check, t_param *world)
+{
+	if (check > 2147483647 || check < 0)
+		error_exit("Corrupted .cub file ", world);
+}
+
 int	to_hex_int(const char *str, t_param *world)
 {
 	char	**split;
-	int	r;
-	int g;
-	int b;
+	long long int	r;
+	long long int	g;
+	long long int	b;
 
 	split = ft_split(str, ',');
 	if (!(ft_isstrdigit(split[0]) && ft_isstrdigit(split[1]) && ft_isstrdigit(split[2])))
@@ -25,6 +31,9 @@ int	to_hex_int(const char *str, t_param *world)
 	r = ft_atoi(split[0]);
 	g = ft_atoi(split[1]);
 	b = ft_atoi(split[2]);
+	check_max_int(r, world);
+	check_max_int(g, world);
+	check_max_int(b, world);
 	return (0 << 24 | r << 16 | g << 8 | b);
 }
 
@@ -112,7 +121,7 @@ void	bresenham(int x0, int y0, int x1, int y1, t_param * world)
 	}
 }
 
-char	*space_string(size_t len, t_param * world)
+char	*space_string(size_t len, t_param *world)
 {
 	char	*res;
 	size_t	i;

@@ -6,7 +6,7 @@
 /*   By: npinheir <npinheir@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 14:22:12 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/14 12:39:53 by npinheir         ###   ########.fr       */
+/*   Updated: 2022/06/14 21:27:47 by npinheir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct s_param
 	char			*ea;
 	t_data			*texture;
 	int				*counter;	// Helps doing parsing
+	unsigned int	map_start;
 }	t_param;
 
 // Drawing
@@ -136,6 +137,7 @@ void	extract_map(t_param *world);
 void	get_player_position(t_param *world);
 void	fill_spaces(t_param *world);
 void	last_map_check(t_param *world);
+void	check_map_end(t_param *world, size_t i);
 
 // File extractor
 void	extract_sand_rose(t_param *world, char **split);
@@ -151,6 +153,7 @@ double	degre_to_radiant(double degre);
 void	bresenham(int x0, int y0, int x1, int y1, t_param *world);
 char	*space_string(size_t len, t_param *world);
 int		get_color_from_img(t_data *img, int x, int y);
+void	check_max_int(long long int check, t_param *world);
 
 // Errors
 void	error_exit(char *message, t_param *world);
@@ -159,3 +162,7 @@ void	error_exit(char *message, t_param *world);
 
 //to_do
 // check map is closed
+// gnl leaks
+// free on error
+// bonne touches
+

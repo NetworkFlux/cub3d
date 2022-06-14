@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub_file.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: npinheir <npinheir@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:34:50 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/13 12:30:37 by swautele         ###   ########.fr       */
+/*   Updated: 2022/06/14 15:08:52 by npinheir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,11 @@ int		counter_check(int *counter)
 	i = 0;
 	while (i < 6)
 	{
-		if (counter[i++] != 1)
+		if (counter[i] == 0)	//maque un
 			return (1);
+		else if (counter[i] > 1) // de trop
+			return (2);
+		i++;
 	}
 	return (0);
 }
@@ -54,22 +57,34 @@ void	extract_file( t_param *world, int fd)
 	char	*holder;
 	char	**split;
 	int		i;
+	int		flag;
 
 	i = 0;
+	flag = 0;
 	world->counter = malloc(sizeof(int) * 6);
 	if (!world->counter)
 		error_exit("Malloc error ", world);
 	while (i < 6)
 		world->counter[i++] = 0;
+	i = 1;
 	while (get_next_line(fd, &holder))
 	{
 		map_data_check(world, holder);
 		split = ft_split(holder, ' ');
 		extract_sand_rose(world, split);
 		extract_f_c(world, split);
+		if (counter_check(world->counter) == 2)
+			error_exit("Corrupted .cub file ", world);
+		if (counter_check(world->counter) == 0 && flag <= 1)
+		{
+			world->map_start = i;
+			if (ft_strlen(holder) > 1)
+				flag++;
+			// printf("map start : %d\n", world->map_start);
+			// printf("holder : %s\n", holder);
+		}
+		i++;
 	}
-	if (counter_check(world->counter))
-		error_exit("Corrupted .cub file ", world);
 	extract_map(world);
 }
 
