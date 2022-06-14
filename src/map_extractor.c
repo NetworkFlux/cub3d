@@ -6,7 +6,7 @@
 /*   By: npinheir <npinheir@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 11:55:03 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/14 15:04:06 by npinheir         ###   ########.fr       */
+/*   Updated: 2022/06/14 17:50:07 by npinheir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,25 +100,58 @@ void	fill_spaces(t_param * world)
 		i++;
 	}
 }
+void	check_map_end(t_param *world, size_t i)
+{
+	int	diff;
+	int	j;
+
+	diff = 0;
+	if (i < world->map_height - 1)
+	{
+		if (ft_strlen(world->map[i]) != ft_strlen(world->map[i + 1]))
+			diff = ft_strlen(world->map[i]) - ft_strlen(world->map[i + 1]);
+		printf("line %zu : %zu, line %zu :%zu, Diff : %d\n",i, ft_strlen(world->map[i]), i + 1, ft_strlen(world->map[i + 1]), diff);
+		// if (world->map[i][ft_strlen(world->map[i]) - 1] != '1' && world->map[i][ft_strlen(world->map[i]) - 1] != 'v')
+		// 	error_exit("Corrupted .cub file", world);
+		// j = 0;
+		// while (j < diff - 1)
+		// {
+		// 	if (world->map[i][ft_strlen(world->map[i + 1]) + j] != '1')
+		// 		error_exit("Corrupted .cub file", world);
+		// 	j++;
+		// }
+		j = 0;
+		while (j > diff + 1)
+		{
+			if (world->map[i + 1][ft_strlen(world->map[i]) - 1 ] != '1')
+			{
+				if (world->map[i + 1][ft_strlen(world->map[i]) + j + 1] != '1')
+					error_exit("Corrupted .cub file", world);
+			}
+			j--;
+		}
+	}
+}
 
 void	last_map_check(t_param *world)
 {
 	size_t	i;
 
 	i = 0;
-	while (i < world->map_height)
+	while (world->map[i])
 	{
-		if (world->map[i][0] != '1' || (world->map[i][world->map_width - 1] != '1' && world->map[i][world->map_width - 1] != 'v'))
+		if (world->map[i][0] != '1' && world->map[i][0] != 'v')
 			error_exit("Corrupted .cub file ", world);
+		check_map_end(world, i);
 		i++;
 	}
-	i = 0;
-	while (i < world->map_width)
-	{
-		if ((world->map[0][i] != 'v' && world->map[0][i] != '1') || (world->map[world->map_height - 1][i] != '1' && world->map[world->map_height - 1][i] != 'v'))
-			error_exit("Corrupted .cub file ", world);
-		i++;
-	}
+	// i = 0;
+	// while (i < world->map_width)
+	// {
+	// 	if ((world->map[0][i] != 'v' && world->map[0][i] != '1') || (world->map[world->map_height - 1][i] != '1' && world->map[world->map_height - 1][i] != 'v'))
+	// 		error_exit("Corrupted .cub file ", world);
+	// 	i++;
+	// }
 }
 
 void	extract_map(t_param *world)
@@ -149,12 +182,19 @@ void	extract_map(t_param *world)
 	while (get_next_line(fd, &holder))
 	{
 		if (valid_map_line(holder) && ft_strlen(holder) > 1)
-			world->map[i++] = ft_strjoin(holder, space_string(world->map_width - ft_strlen(holder), world));
+			world->map[i++] = ft_substr(holder, 0, ft_strlen(holder));
 		else if (!valid_map_line(holder))
 			error_exit("Corrupted .cub file ", world);
 	}
 	world->map[i] = NULL;
+	i = 0;
+	while (world->map[i])
+		printf("%s\n", world->map[i++]);
 	fill_spaces(world);
+	printf("\n\n\n");
+	i = 0;
+	while (world->map[i])
+		printf("%s\n", world->map[i++]);
 	last_map_check(world);
 	get_player_position(world);
 }
