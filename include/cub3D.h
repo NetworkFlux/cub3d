@@ -6,7 +6,7 @@
 /*   By: npinheir <npinheir@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 14:22:12 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/13 10:28:10 by npinheir         ###   ########.fr       */
+/*   Updated: 2022/06/14 12:39:53 by npinheir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@
 
 # define SIZE 64
 # define ANGLEVISION 60
-# define ECAR 0.05
-# define NBRAY ANGLEVISION / ECAR
-# define SCREEN_HEIGHT 900
-# define SCREEN_WIDTH 1200
+# define ECAR 0.025
+// # define NBRAY ANGLEVISION / ECAR // ANGLEVISION / ECAR
+# define SCREEN_HEIGHT 1200
+// # define SCREEN_WIDTH NBRAY
 # define NOSE 20
 # define MOVE 8
-# define MID ANGLEVISION / 2
-# define LIMIT MOVE * 3
-# define HALF_SCREEN SCREEN_HEIGHT / 2
+// # define MID ANGLEVISION / 2 // ANGLEVISION / 2
+// # define LIMIT MOVE * 3 // MOVE * 3
+// # define HALF_SCREEN SCREEN_HEIGHT / 2 // SCREEN_HEIGHT / 2
 
 typedef enum e_bool
 {
@@ -69,6 +69,10 @@ typedef struct s_param
 	int				map_y_pos;	// Player y position in the map
 	int				player_size;	// Length of side of square representing player
 	int				flag_wall;
+	int				nbray;		//value to replace macro fo the norm
+	int				mid;
+	int				limit;
+	int				half_screen; 	// till here
 	double			player_front;	// The ray laaunched just in front of the player
 	double			player_left;
 	double			player_right;
@@ -82,7 +86,7 @@ typedef struct s_param
 	void			*clean;	// Something clean ??
 	int				floor_color;	
 	int				ceiling_color;
-	int				wall_color;
+	// int				wall_color;
 	char			*path;	// Path to the .cub file
 	char			*no;	// Path to textures
 	char			*so;
@@ -154,4 +158,4 @@ void	error_exit(char *message, t_param *world);
 #endif
 
 //to_do
-// check texture existe
+// check map is closed

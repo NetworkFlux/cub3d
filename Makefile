@@ -6,7 +6,7 @@
 #    By: swautele <swautele@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/30 15:23:41 by npinheir          #+#    #+#              #
-#    Updated: 2022/06/09 15:13:37 by swautele         ###   ########.fr        #
+#    Updated: 2022/06/13 16:26:25 by swautele         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 NAME = cub3D
 
 # Compiling flags
-FLAGS = -Wall -Wextra -Werror -Iinclude -g
+FLAGS = -Wall -Wextra -Werror -Iinclude
 
 # Folders
 SRC_DIR = ./src/
@@ -27,6 +27,8 @@ MINLBX_DIR = ./minilibx_opengl/
 SRC_FILES = main.c errors.c cub_file.c utils.c file_extractor.c \
 			map_extractor.c minimap.c init_window.c move.c distance.c check_walls.c \
 			get_texture.c
+
+HEADER = ./include/cub3D.h
 			 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 
@@ -52,7 +54,7 @@ obj:
 	@mkdir -p $(OBJ_DIR)
 	@echo "\t$(GREEN)✔ Object folder created in cub3D !$(NONE)"
 	
-$(OBJ_DIR)%.o:$(SRC_DIR)%.c
+$(OBJ_DIR)%.o:$(SRC_DIR)%.c $(HEADER)
 	@gcc $(FLAGS) -I $(MINLBX_DIR) -I $(LIBFT_DIR) -I $(INC_DIR) -o $@ -c $<
 	
 $(LIBFT):

@@ -6,7 +6,7 @@
 /*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:29:50 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/09 14:00:29 by swautele         ###   ########.fr       */
+/*   Updated: 2022/06/13 13:03:07 by swautele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ void	error_exit(char *message, t_param *world)
 	(void)world;
 	ft_putendl_fd("Error", 2);
 	ft_putendl_fd(message, 2);
-	//free(world);
+	free(world);
 	exit(EXIT_FAILURE);
 }
