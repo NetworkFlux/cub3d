@@ -6,7 +6,7 @@
 /*   By: npinheir <npinheir@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 14:22:12 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/14 21:27:47 by npinheir         ###   ########.fr       */
+/*   Updated: 2022/06/15 00:48:49 by npinheir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,6 @@ void	pixel_to_image(t_data *img, int x, int y, int color);
 int		exit_cub3d(t_param *world);
 double	degre_to_radiant(double degre);
 void	bresenham(int x0, int y0, int x1, int y1, t_param *world);
-char	*space_string(size_t len, t_param *world);
 int		get_color_from_img(t_data *img, int x, int y);
 void	check_max_int(long long int check, t_param *world);
 
