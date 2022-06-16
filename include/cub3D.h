@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: npinheir <npinheir@student.s19.be>         +#+  +:+       +#+        */
+/*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 14:22:12 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/16 13:32:14 by npinheir         ###   ########.fr       */
+/*   Updated: 2022/06/16 18:50:09 by swautele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 
 # define SIZE 64
 # define ANGLEVISION 60
-# define ECAR 0.05
+# define ECAR 0.025
 // # define NBRAY ANGLEVISION / ECAR // ANGLEVISION / ECAR
-# define SCREEN_HEIGHT 600
+# define SCREEN_HEIGHT 1200
 // # define SCREEN_WIDTH NBRAY
 # define NOSE 20
 # define MOVE 0.1
@@ -91,7 +91,7 @@ typedef struct s_param
 	void			*window;	// MLX window
 	t_data			*img;	// MLX image
 	// t_data			*key;
-	void			*clean;	// Something clean ??
+	t_data			*calque;	// Something clean ??
 	int				floor_color;	
 	int				ceiling_color;
 	// int				wall_color;
@@ -117,7 +117,7 @@ typedef struct s_param
 void	init_window(t_param *world);
 int		draw_view(t_param *world);
 void	draw_col(t_param *world, double dist, double offset, double x_wall);
-void	draw_key(t_param *world, double offset);
+void	draw_key(t_param *world, double offset, double dist);
 
 // Hooks
 int		keyboard_press(int keycode, t_param *world);

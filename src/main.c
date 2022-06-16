@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simonwautelet <simonwautelet@student.42    +#+  +:+       +#+        */
+/*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:19:31 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/15 22:29:46 by simonwautel      ###   ########.fr       */
+/*   Updated: 2022/06/16 17:58:57 by swautele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	init_world(t_param *world)
 	world->video = NULL;
 	world->window = NULL;
 	world->img = NULL;
-	world->clean = NULL;
+	world->calque = NULL;
 	world->floor_color = 0;
 	world->ceiling_color = 0;
 	// world->wall_color = 0;

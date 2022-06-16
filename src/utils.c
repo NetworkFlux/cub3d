@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: npinheir <npinheir@student.s19.be>         +#+  +:+       +#+        */
+/*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:33:12 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/14 15:09:46 by npinheir         ###   ########.fr       */
+/*   Updated: 2022/06/16 17:59:31 by swautele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ size_t	len_array_2d(char **split)
 int	exit_cub3d(t_param *world)
 {
 	mlx_destroy_image(world->video, world->img->img);
-	mlx_destroy_image(world->video, world->clean);
+	mlx_destroy_image(world->video, world->calque);
 	mlx_destroy_image(world->video, world->texture[0].img);
 	mlx_destroy_image(world->video, world->texture[1].img);
 	mlx_destroy_image(world->video, world->texture[2].img);
@@ -104,7 +104,7 @@ void	bresenham(int x0, int y0, int x1, int y1, t_param * world)
 		err = -dy / 2;
 	while (1)
 	{
-		pixel_to_image(world->img, x0, y0, 0x00000000);
+		pixel_to_image(world->calque, x0, y0, 0x00000000);
 		if (x0 == x1 && y0 == y1)
 			break ;
 		e2 = err;

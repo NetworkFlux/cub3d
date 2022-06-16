@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: npinheir <npinheir@student.s19.be>         +#+  +:+       +#+        */
+/*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 12:03:54 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/16 10:55:42 by npinheir         ###   ########.fr       */
+/*   Updated: 2022/06/16 19:11:42 by swautele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,18 @@ void	paint_square_map(unsigned int x, unsigned int y, unsigned int square_length
 		while (j < square_length)
 		{
 			if (world->map[x][y] == '1')
-				pixel_to_image(world->img, y * square_length + i, x * square_length + j, create_trgb(100, 255, 255, 255));	// couleur des cases mur
+				pixel_to_image(world->calque, y * square_length + i, x * square_length + j, create_trgb(100, 255, 255, 255));	// couleur des cases mur
 			// else if (world->map[x][y] == ' ' || !world->map[x][y])
 			// {
 			// 	j++;
 			// 	continue;
 			// }
 			else if (world->map[x][y] == '0' || ft_char_in_str(world->map[x][y], "NSEW"))
-				pixel_to_image(world->img, y * square_length + i, x * square_length + j, create_trgb(100, 128, 128, 128));	// couleur des cases terrain
+				pixel_to_image(world->calque, y * square_length + i, x * square_length + j, create_trgb(100, 128, 128, 128));	// couleur des cases terrain
 			else if (world->map[x][y] == 'D')
-				pixel_to_image(world->img, y * square_length + i, x * square_length + j, create_trgb(100, 139, 69, 19));
+				pixel_to_image(world->calque, y * square_length + i, x * square_length + j, create_trgb(100, 139, 69, 19));
 			else if (world->map[x][y] == 'K')
-				pixel_to_image(world->img, y * square_length + i, x * square_length + j, create_trgb(100, 212, 175, 55));
+				pixel_to_image(world->calque, y * square_length + i, x * square_length + j, create_trgb(100, 212, 175, 55));
 			j++;
 		}
 		i++;
@@ -80,7 +80,7 @@ void	draw_player(t_param *world, unsigned int square_length)
 	{
 		j = 0;
 		while (j < world->player_size)
-			pixel_to_image(world->img, world->map_x_pos - (world->player_size / 2) + i, world->map_y_pos - (world->player_size / 2) + j++, 0x00000000);
+			pixel_to_image(world->calque, world->map_x_pos - (world->player_size / 2) + i, world->map_y_pos - (world->player_size / 2) + j++, 0x00000000);
 		i++;
 	}
 	//world->p_x_mid = world->p_map_x + world->p_size;
