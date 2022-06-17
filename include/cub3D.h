@@ -6,7 +6,7 @@
 /*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 14:22:12 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/17 13:29:27 by swautele         ###   ########.fr       */
+/*   Updated: 2022/06/17 19:00:41 by swautele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,8 @@ void	bresenham(int x0, int y0, int x1, int y1, t_param *world);
 char	*space_string(size_t len, t_param *world);
 int		get_color_from_img(t_data *img, int x, int y);
 void	check_max_int(long long int check, t_param *world);
+void	colorise(t_data *img, int x, int y);
+void	open_door(t_param *world);
 
 // Errors
 void	error_exit(char *message, t_param *world);

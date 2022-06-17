@@ -6,7 +6,7 @@
 /*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 19:13:03 by simonwautel       #+#    #+#             */
-/*   Updated: 2022/06/17 13:36:05 by swautele         ###   ########.fr       */
+/*   Updated: 2022/06/17 18:26:25 by swautele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,107 +17,12 @@
 //orientation de 180 a 270 bas droite de pi a 1.5 pi radian
 //orientation de 270 a 360 bas gauche de 1.5 pi radian a  2 pi radian
 
-int	keyboard(t_param *world)
-{
-	if (world->flag_rotateleft == TRUE)
-		world->orient = (world->orient + ROTATE) % 360;
-	if (world->flag_rotateright == TRUE)
-	{
-		world->orient = world->orient - ROTATE;
-		if (world->orient < 0)
-			world->orient += 360;
-	}
-	if (world->flag_front == TRUE)
-		move_forward(world);
-	if (world->flag_left == TRUE)
-		move_left(world);
-	if (world->flag_right == TRUE)
-		move_right(world);
-	if (world->flag_back == TRUE)
-		move_back(world);
-	return (0);
-}
 
-void	open_door(t_param *world)
-{
-	if (world->player_front < 2 && world->flag_frontdoor && world->key_picked)
-	{
-		if (world->orient >= 45 && world->orient < 135 && world->map[(int)world->px_y_pos - 1][(int)world->px_x_pos] == 'D')
-			world->map[(int)world->px_y_pos - 1][(int)world->px_x_pos] = '0';
-		else if (world->orient >= 135 && world->orient < 225 && world->map[(int)world->px_y_pos][(int)world->px_x_pos - 1] == 'D')
-			world->map[(int)world->px_y_pos][(int)world->px_x_pos - 1] = '0';
-		else if (world->orient >= 225 && world->orient < 315 && world->map[(int)world->px_y_pos + 1][(int)world->px_x_pos] == 'D')
-			world->map[(int)world->px_y_pos + 1][(int)world->px_x_pos] = '0';
-		else if ((world->orient >= 315 || world->orient < 45) && world->map[(int)world->px_y_pos][(int)world->px_x_pos + 1] == 'D')
-			world->map[(int)world->px_y_pos][(int)world->px_x_pos + 1] = '0';
-		// world->map[(int)((int)world->px_y_pos - world->player_front * sin(degre_to_radiant(world->orient)))][(int)((int)world->px_x_pos + world->player_front * cos(degre_to_radiant(world->orient)))] = '0';
-	}
-	if (world->map[(int)world->px_y_pos][(int)world->px_x_pos] == 'K')
-	{
-		world->map[(int)world->px_y_pos][(int)world->px_x_pos] = '0';
-		world->key_picked = TRUE;
-	}
-}
 
-int	keyboard_press(int keycode, t_param *world)
-{
-	/*	All action that can possibly be made by the player	*/
 
-	//printf("keycode = %d\n", keycode);
-	if (keycode == 14)
-		open_door(world);
-	if (keycode == 123)
-		world->flag_rotateleft = TRUE;
-	if (keycode == 124)
-		world->flag_rotateright = TRUE;
-	if (keycode == 13 || keycode == 126)
-		world->flag_front = TRUE;
-	if (keycode == 53)
-		exit_cub3d(world);
-	if (keycode == 0)
-		world->flag_left = TRUE;
-	if (keycode == 2)
-		world->flag_right = TRUE;
-	if (keycode == 1 || keycode == 125)
-		world->flag_back = TRUE;
-	return (0);
-}
-int	keyboard_release(int keycode, t_param *world)
-{
-	if (keycode == 123)
-		world->flag_rotateleft = FALSE;
-	if (keycode == 124)
-		world->flag_rotateright = FALSE;
-	if (keycode == 13 || keycode == 126)
-		world->flag_front = FALSE;
-	if (keycode == 0)
-		world->flag_left = FALSE;
-	if (keycode == 2)
-		world->flag_right = FALSE;
-	if (keycode == 1 || keycode == 125)
-		world->flag_back = FALSE;
-	return (0);
-}
 
-void	colorise(t_data *img, int x, int y)
-{
-	int	i;
-	int	j;
 
-	i = 0;
-	j = 0;
-	while (i < x)
-	{
-		j = 0;
-		while (j < y)
-		{
-			pixel_to_image(img, i, j, 0xff000000);
-			j++;
-		}
-		i++;
-	}
-	// printf("%x\n", get_color_from_img(img, x / 2, y / 2));
-}
+
 
 void	init_window(t_param *world)
 {
@@ -179,163 +84,114 @@ void	init_window(t_param *world)
 	free (world->img);
 }
 
-int	draw_view(t_param *world)
-{
-	/*	Function that will output the visuals	*/
+// int	draw_view(t_param *world)
+// {
+// 	/*	Function that will output the visuals	*/
 
-	double	offset;
-	double	dist;
-	double	x_wall;
+// 	double	offset;
+// 	double	dist;
+// 	double	x_wall;
 
-	offset = ANGLEVISION;
-	keyboard(world);
-	x_wall = 0;
-	if (world->flag_anim == FALSE)
-	{
-		if (world->offset_anim > 30 / world->player_front)
-			world->flag_anim = TRUE;
-		world->offset_anim++;
-	}
-	else if (world->flag_anim == TRUE)
-	{
-		if (world->offset_anim < -30 / world->player_front)
-			world->flag_anim = FALSE;
-		world->offset_anim--;
-	}
-	colorise(world->calque, world->calque->x_size, world->calque->y_size);
-	while (offset >= 0)
-	{
-		dist = calcul_dist_till_wall(world, world->orient - offset + world->mid, &x_wall);
-		if ((int)offset == world->mid)
-		{
-			world->flag_frontdoor = (char)world->flag_wall;
-			world->player_front = dist;
-		}
-		draw_col(world, dist, offset, x_wall);
-		if (world->keyfound == TRUE)
-			draw_key(world, offset, dist);
-		offset -= ECAR;
-		// world->keyfound = FALSE;
-	}
-	// printf("player left = %f", world->player_left);
-	world->player_left = calcul_dist_till_wall(world, world->orient + 90, &x_wall);
-	world->player_right = calcul_dist_till_wall(world, world->orient - 90, &x_wall);
-	world->player_back = calcul_dist_till_wall(world, world->orient - 180, &x_wall);
-	draw_minimap(world);
-	// mlx_put_image_to_window(world->video, world->window, world->clean, 0, 0);
-	mlx_put_image_to_window(world->video, world->window, world->img->img, 0, 0);
-	mlx_put_image_to_window(world->video, world->window, world->calque->img, 0, 0);
-	world->keyfound = FALSE;
-	world->dist_key = -1;
-	return (0);
-}
+// 	offset = ANGLEVISION;
+// 	keyboard(world);
+// 	x_wall = 0;
+// 	if (world->flag_anim == FALSE)
+// 	{
+// 		if (world->offset_anim > 30 / world->player_front)
+// 			world->flag_anim = TRUE;
+// 		world->offset_anim++;
+// 	}
+// 	else if (world->flag_anim == TRUE)
+// 	{
+// 		if (world->offset_anim < -30 / world->player_front)
+// 			world->flag_anim = FALSE;
+// 		world->offset_anim--;
+// 	}
+// 	colorise(world->calque, world->calque->x_size, world->calque->y_size);
+// 	while (offset >= 0)
+// 	{
+// 		dist = calcul_dist_till_wall(world, world->orient - offset + world->mid, &x_wall);
+// 		if ((int)offset == world->mid)
+// 		{
+// 			world->flag_frontdoor = (char)world->flag_wall;
+// 			world->player_front = dist;
+// 		}
+// 		draw_col(world, dist, offset, x_wall);
+// 		if (world->keyfound == TRUE)
+// 			draw_key(world, offset, dist);
+// 		offset -= ECAR;
+// 		// world->keyfound = FALSE;
+// 	}
+// 	// printf("player left = %f", world->player_left);
+// 	world->player_left = calcul_dist_till_wall(world, world->orient + 90, &x_wall);
+// 	world->player_right = calcul_dist_till_wall(world, world->orient - 90, &x_wall);
+// 	world->player_back = calcul_dist_till_wall(world, world->orient - 180, &x_wall);
+// 	draw_minimap(world);
+// 	// mlx_put_image_to_window(world->video, world->window, world->clean, 0, 0);
+// 	mlx_put_image_to_window(world->video, world->window, world->img->img, 0, 0);
+// 	mlx_put_image_to_window(world->video, world->window, world->calque->img, 0, 0);
+// 	world->keyfound = FALSE;
+// 	world->dist_key = -1;
+// 	return (0);
+// }
 
-void	draw_key(t_param *world, double offset, double dist)
-{
-	int	x;
-	int	y;
-	int	key_size;
-	int	mid;
-	double	x_texture;
-	double	y_texture;
-	unsigned int 	color;
-	// t_bool	found;
+// void	draw_key(t_param *world, double offset, double dist)
+// {
+// 	int	x;
+// 	int	y;
+// 	int	key_size;
+// 	int	mid;
+// 	double	x_texture;
+// 	double	y_texture;
+// 	unsigned int 	color;
+// 	// t_bool	found;
 
-	if (world->dist_key < 0.1 || world->x_wallkey < 0)
-	{
-		// world->keyfound = FALSE;
-		return ;
-	}
-	// found = FALSE;
-	// printf("dist key = %f\n", world->dist_key);
-	x = ((double)world->nbray * offset / (double)ANGLEVISION);
-	key_size = SCREEN_HEIGHT * 0.5 / world->dist_key;
-	mid = world->half_screen + (world->offset_anim);
-	y_texture = 0;
-	y = 0;
-	x_texture = world->x_wallkey * world->texture[KE].x_size;
-	if (x_texture < 0)
-		world->keyfound = FALSE;
-	if (key_size > SCREEN_HEIGHT)
-		y_texture = ((key_size * 2) - SCREEN_HEIGHT) * (double)(world->texture[world->flag_wall].y_size) / (double)((key_size * 2)) / 2;
-	while (y <= SCREEN_HEIGHT && x_texture <= world->texture[KE].x_size)
-	{
-		if (y > mid - key_size && y < mid + key_size && world->dist_key < dist)
-		{
-			// x_texture = world->x_wallkey * world->texture[KE].x_size;
-			// world->x_wallkey += 1;
-			// printf("%f\n", world->x_wallkey);
-			// if (x_texture > world->texture[world->flag_wall].x_size)
-			// 	printf("x texture = %d et world->texture[world->flag_wall].x_size = %d \n", x_texture, world->texture[world->flag_wall].x_size);
-			y_texture += (double)(world->texture[KE].y_size) / (double)((key_size * 2));
-			if (y_texture >= world->texture[KE].y_size)
-				y_texture = world->texture[KE].y_size - 1;
-			// color = get_color_from_img(&world->texture[KE], x_texture, y_texture);
-// printf(" x_texture = %f key_size = %d xwall_key = %f\n", x_texture, key_size, world->x_wallkey);
-			if ((color = get_color_from_img(&world->texture[KE], x_texture, y_texture)) != 0xff000000)
-			{
-			pixel_to_image(world->calque, x, y, color);
-			}
-			// printf("color = %x\n", color);
-		}
-		y++;
-	}
-	world->x_wallkey -= (double)0.5 / (double)key_size;
-// printf("xwalkey = %f\n", world->x_wallkey);
-	// printf("xwalkey = %f\n", world->x_wallkey);
-	// if (found == FALSE && x_texture > world->texture[KE].x_size / 2)
-	// {
-	// 	world->keyfound = FALSE;
-		// world->dist_key = -1;
-	// }
-}
+// 	if (world->dist_key < 0.1 || world->x_wallkey < 0)
+// 	{
+// 		// world->keyfound = FALSE;
+// 		return ;
+// 	}
+// 	// found = FALSE;
+// 	// printf("dist key = %f\n", world->dist_key);
+// 	x = ((double)world->nbray * offset / (double)ANGLEVISION);
+// 	key_size = SCREEN_HEIGHT * 0.5 / world->dist_key;
+// 	mid = world->half_screen + (world->offset_anim);
+// 	y_texture = 0;
+// 	y = 0;
+// 	x_texture = world->x_wallkey * world->texture[KE].x_size;
+// 	if (x_texture < 0)
+// 		world->keyfound = FALSE;
+// 	if (key_size > SCREEN_HEIGHT)
+// 		y_texture = ((key_size * 2) - SCREEN_HEIGHT) * (double)(world->texture[world->flag_wall].y_size) / (double)((key_size * 2)) / 2;
+// 	while (y <= SCREEN_HEIGHT && x_texture <= world->texture[KE].x_size)
+// 	{
+// 		if (y > mid - key_size && y < mid + key_size && world->dist_key < dist)
+// 		{
+// 			// x_texture = world->x_wallkey * world->texture[KE].x_size;
+// 			// world->x_wallkey += 1;
+// 			// printf("%f\n", world->x_wallkey);
+// 			// if (x_texture > world->texture[world->flag_wall].x_size)
+// 			// 	printf("x texture = %d et world->texture[world->flag_wall].x_size = %d \n", x_texture, world->texture[world->flag_wall].x_size);
+// 			y_texture += (double)(world->texture[KE].y_size) / (double)((key_size * 2));
+// 			if (y_texture >= world->texture[KE].y_size)
+// 				y_texture = world->texture[KE].y_size - 1;
+// 			// color = get_color_from_img(&world->texture[KE], x_texture, y_texture);
+// // printf(" x_texture = %f key_size = %d xwall_key = %f\n", x_texture, key_size, world->x_wallkey);
+// 			if ((color = get_color_from_img(&world->texture[KE], x_texture, y_texture)) != 0xff000000)
+// 			{
+// 			pixel_to_image(world->calque, x, y, color);
+// 			}
+// 			// printf("color = %x\n", color);
+// 		}
+// 		y++;
+// 	}
+// 	world->x_wallkey -= (double)0.5 / (double)key_size;
+// // printf("xwalkey = %f\n", world->x_wallkey);
+// 	// printf("xwalkey = %f\n", world->x_wallkey);
+// 	// if (found == FALSE && x_texture > world->texture[KE].x_size / 2)
+// 	// {
+// 	// 	world->keyfound = FALSE;
+// 		// world->dist_key = -1;
+// 	// }
+// }
 
-void	draw_col(t_param *world, double dist, double offset, double x_wall)
-{
-	int	x;
-	int	y;
-	int	offset_wall;
-	int	mid;
-	int	x_texture;
-	double	y_texture;
-	// int	i;
-	// int	col_width;
-
-	// col_width = SCREEN_WIDTH / NBRAY;
-	x = world->nbray * offset / ANGLEVISION;
-	y = 0;
-	offset_wall = SCREEN_HEIGHT * 0.5 / dist;
-	mid = world->half_screen;
-	y_texture = 0;
-	if (offset_wall * 2 > SCREEN_HEIGHT)
-		y_texture = ((offset_wall * 2) - SCREEN_HEIGHT) * (double)(world->texture[world->flag_wall].y_size) / (double)((offset_wall * 2)) / 2;
-	while (y <= SCREEN_HEIGHT)
-	{
-		if (y < mid - offset_wall)
-		{
-			// i = -1;
-			// while (++i < col_width)
-			pixel_to_image(world->img, x, y, world->ceiling_color);
-		}
-		else if (y >= mid + offset_wall)
-		{
-			// i = -1;
-			// while (++i < col_width)
-			pixel_to_image(world->img, x, y, world->floor_color);
-		}
-		else
-		{
-			x_texture = x_wall * (double)world->texture[world->flag_wall].x_size;
-			// if (x_texture > world->texture[world->flag_wall].x_size)
-			// 	printf("x texture = %d et world->texture[world->flag_wall].x_size = %d \n", x_texture, world->texture[world->flag_wall].x_size);
-			y_texture += (double)(world->texture[world->flag_wall].y_size) / (double)((offset_wall * 2));
-			if (y_texture >= world->texture[world->flag_wall].y_size)
-				y_texture = world->texture[world->flag_wall].y_size - 1;
-			// i = -1;
-			// while (++i < col_width)
-			pixel_to_image(world->img, x, y, get_color_from_img(&world->texture[world->flag_wall], x_texture, y_texture));
-		}
-		y++;
-	}
-	// world->dist_key = -1;
-}
