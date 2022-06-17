@@ -6,7 +6,7 @@
 /*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 14:22:12 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/17 12:32:39 by swautele         ###   ########.fr       */
+/*   Updated: 2022/06/17 13:29:27 by swautele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ typedef struct s_param
 	t_bool			flag_rotateright;
 	t_bool			flag_rotateleft;
 	char			flag_frontdoor;
+	t_bool			flag_anim;
+	int				offset_anim;
 }	t_param;
 
 // Drawing

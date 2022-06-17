@@ -6,7 +6,7 @@
 /*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 19:13:03 by simonwautel       #+#    #+#             */
-/*   Updated: 2022/06/17 12:53:17 by swautele         ###   ########.fr       */
+/*   Updated: 2022/06/17 13:32:46 by swautele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,18 @@ int	draw_view(t_param *world)
 	offset = ANGLEVISION;
 	keyboard(world);
 	x_wall = 0;
+	if (world->flag_anim == FALSE)
+	{
+		if (world->offset_anim > 30)
+			world->flag_anim = TRUE;
+		world->offset_anim++;
+	}
+	else if (world->flag_anim == TRUE)
+	{
+		if (world->offset_anim < -30)
+			world->flag_anim = FALSE;
+		world->offset_anim--;
+	}
 	colorise(world->calque, world->calque->x_size, world->calque->y_size);
 	while (offset >= 0)
 	{
@@ -238,7 +250,7 @@ void	draw_key(t_param *world, double offset, double dist)
 	// printf("dist key = %f\n", world->dist_key);
 	x = ((double)world->nbray * offset / (double)ANGLEVISION);
 	key_size = SCREEN_HEIGHT * 0.5 / world->dist_key;
-	mid = world->half_screen;
+	mid = world->half_screen + (world->offset_anim);
 	y_texture = 0;
 	y = 0;
 	x_texture = world->x_wallkey * world->texture[KE].x_size;
