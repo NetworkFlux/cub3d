@@ -6,7 +6,7 @@
 /*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 19:13:03 by simonwautel       #+#    #+#             */
-/*   Updated: 2022/06/17 12:48:51 by swautele         ###   ########.fr       */
+/*   Updated: 2022/06/17 12:53:17 by swautele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,7 @@ void	draw_key(t_param *world, double offset, double dist)
 	}
 	// found = FALSE;
 	// printf("dist key = %f\n", world->dist_key);
-	x = (double)world->nbray * offset / (double)ANGLEVISION;
+	x = ((double)world->nbray * offset / (double)ANGLEVISION);
 	key_size = SCREEN_HEIGHT * 0.5 / world->dist_key;
 	mid = world->half_screen;
 	y_texture = 0;
@@ -268,7 +268,7 @@ void	draw_key(t_param *world, double offset, double dist)
 		}
 		y++;
 	}
-	world->x_wallkey -= (double)1 / (double)key_size;
+	world->x_wallkey -= (double)0.5 / (double)key_size;
 // printf("xwalkey = %f\n", world->x_wallkey);
 	// printf("xwalkey = %f\n", world->x_wallkey);
 	// if (found == FALSE && x_texture > world->texture[KE].x_size / 2)
