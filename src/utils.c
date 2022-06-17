@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simonwautelet <simonwautelet@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:33:12 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/16 17:59:31 by swautele         ###   ########.fr       */
+/*   Updated: 2022/06/17 15:31:00 by simonwautel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	check_max_int(long long int check, t_param *world)
 {
 	if (check > 2147483647 || check < 0)
-		error_exit("Corrupted .cub file ", world);
+		error_exit("Corrupted .cub file 5", world);
 }
 
 int	to_hex_int(const char *str, t_param *world)
@@ -27,7 +27,7 @@ int	to_hex_int(const char *str, t_param *world)
 
 	split = ft_split(str, ',');
 	if (!(ft_isstrdigit(split[0]) && ft_isstrdigit(split[1]) && ft_isstrdigit(split[2])))
-		error_exit("Corrupted .cub file ", world);
+		error_exit("Corrupted .cub file 6", world);
 	r = ft_atoi(split[0]);
 	g = ft_atoi(split[1]);
 	b = ft_atoi(split[2]);

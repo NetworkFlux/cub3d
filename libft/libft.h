@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: npinheir <npinheir@student.s19.be>         +#+  +:+       +#+        */
+/*   By: simonwautelet <simonwautelet@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/19 23:35:02 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/02 12:04:30 by npinheir         ###   ########.fr       */
+/*   Updated: 2022/06/17 15:24:50 by simonwautel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
-
-# define BUFFER_SIZE 32
+# include "get_next_line.h"
 
 typedef struct s_list
 {
@@ -86,9 +85,6 @@ t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 // Added functions
-int		get_next_line(int fd, char **line);
-char	*ft_clean(char *str);
-char	*ft_clean_save(char *str);
 
 int		ft_strsame(const char *str1, const char *str2);
 

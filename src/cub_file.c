@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub_file.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: npinheir <npinheir@student.s19.be>         +#+  +:+       +#+        */
+/*   By: simonwautelet <simonwautelet@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:34:50 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/14 15:08:52 by npinheir         ###   ########.fr       */
+/*   Updated: 2022/06/17 15:30:31 by simonwautel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,14 @@ void	extract_file( t_param *world, int fd)
 	while (i < 6)
 		world->counter[i++] = 0;
 	i = 1;
-	while (get_next_line(fd, &holder))
+	while ((holder = get_next_line(fd)))
 	{
 		map_data_check(world, holder);
 		split = ft_split(holder, ' ');
 		extract_sand_rose(world, split);
 		extract_f_c(world, split);
 		if (counter_check(world->counter) == 2)
-			error_exit("Corrupted .cub file ", world);
+			error_exit("Corrupted .cub file 1", world);
 		if (counter_check(world->counter) == 0 && flag <= 1)
 		{
 			world->map_start = i;
