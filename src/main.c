@@ -6,7 +6,7 @@
 /*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:19:31 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/16 17:58:57 by swautele         ###   ########.fr       */
+/*   Updated: 2022/06/17 12:32:49 by swautele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	init_world(t_param *world)
 	world->flag_rotateleft = FALSE;
 	world->dist_key = -1;
 	world->keyfound = FALSE;
+	world->key_picked = FALSE;
 }
 
 // static void	output_tests(t_param *world)

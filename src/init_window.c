@@ -6,7 +6,7 @@
 /*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 19:13:03 by simonwautel       #+#    #+#             */
-/*   Updated: 2022/06/16 19:37:42 by swautele         ###   ########.fr       */
+/*   Updated: 2022/06/17 12:48:51 by swautele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	keyboard(t_param *world)
 
 void	open_door(t_param *world)
 {
-	if (world->player_front < 2 && world->flag_frontdoor && world->keyfound)
+	if (world->player_front < 2 && world->flag_frontdoor && world->key_picked)
 	{
 		if (world->orient >= 45 && world->orient < 135 && world->map[(int)world->px_y_pos - 1][(int)world->px_x_pos] == 'D')
 			world->map[(int)world->px_y_pos - 1][(int)world->px_x_pos] = '0';
@@ -55,7 +55,7 @@ void	open_door(t_param *world)
 	if (world->map[(int)world->px_y_pos][(int)world->px_x_pos] == 'K')
 	{
 		world->map[(int)world->px_y_pos][(int)world->px_x_pos] = '0';
-		world->keyfound = TRUE;
+		world->key_picked = TRUE;
 	}
 }
 
@@ -203,6 +203,7 @@ int	draw_view(t_param *world)
 		if (world->keyfound == TRUE)
 			draw_key(world, offset, dist);
 		offset -= ECAR;
+		// world->keyfound = FALSE;
 	}
 	// printf("player left = %f", world->player_left);
 	world->player_left = calcul_dist_till_wall(world, world->orient + 90, &x_wall);
@@ -223,26 +224,29 @@ void	draw_key(t_param *world, double offset, double dist)
 	int	y;
 	int	key_size;
 	int	mid;
-	int	x_texture;
+	double	x_texture;
 	double	y_texture;
 	unsigned int 	color;
 	// t_bool	found;
 
-	if (world->dist_key < 0)
+	if (world->dist_key < 0.1 || world->x_wallkey < 0)
+	{
+		// world->keyfound = FALSE;
 		return ;
+	}
 	// found = FALSE;
 	// printf("dist key = %f\n", world->dist_key);
-	x = world->nbray * offset / ANGLEVISION;
+	x = (double)world->nbray * offset / (double)ANGLEVISION;
 	key_size = SCREEN_HEIGHT * 0.5 / world->dist_key;
 	mid = world->half_screen;
 	y_texture = 0;
 	y = 0;
 	x_texture = world->x_wallkey * world->texture[KE].x_size;
-	if (x_texture > world->texture[KE].x_size)
+	if (x_texture < 0)
 		world->keyfound = FALSE;
-	if (key_size * 2 > SCREEN_HEIGHT)
+	if (key_size > SCREEN_HEIGHT)
 		y_texture = ((key_size * 2) - SCREEN_HEIGHT) * (double)(world->texture[world->flag_wall].y_size) / (double)((key_size * 2)) / 2;
-	while (y <= SCREEN_HEIGHT && x_texture < world->texture[KE].x_size)
+	while (y <= SCREEN_HEIGHT && x_texture <= world->texture[KE].x_size)
 	{
 		if (y > mid - key_size && y < mid + key_size && world->dist_key < dist)
 		{
@@ -254,17 +258,18 @@ void	draw_key(t_param *world, double offset, double dist)
 			y_texture += (double)(world->texture[KE].y_size) / (double)((key_size * 2));
 			if (y_texture >= world->texture[KE].y_size)
 				y_texture = world->texture[KE].y_size - 1;
-			color = get_color_from_img(&world->texture[KE], x_texture, y_texture);
-			// if ((color = get_color_from_img(&world->texture[KE], x_texture, y_texture)) != 0xff000000)
-			// {
-				// found = TRUE;
+			// color = get_color_from_img(&world->texture[KE], x_texture, y_texture);
+// printf(" x_texture = %f key_size = %d xwall_key = %f\n", x_texture, key_size, world->x_wallkey);
+			if ((color = get_color_from_img(&world->texture[KE], x_texture, y_texture)) != 0xff000000)
+			{
 			pixel_to_image(world->calque, x, y, color);
-			// }
+			}
 			// printf("color = %x\n", color);
 		}
 		y++;
 	}
-	// world->x_wallkey += 1 / key_size;
+	world->x_wallkey -= (double)1 / (double)key_size;
+// printf("xwalkey = %f\n", world->x_wallkey);
 	// printf("xwalkey = %f\n", world->x_wallkey);
 	// if (found == FALSE && x_texture > world->texture[KE].x_size / 2)
 	// {

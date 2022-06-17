@@ -6,7 +6,7 @@
 /*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 14:22:12 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/16 18:50:09 by swautele         ###   ########.fr       */
+/*   Updated: 2022/06/17 12:32:39 by swautele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_param
 	double			dist_key;
 	double			x_wallkey;
 	t_bool			keyfound;
+	t_bool			key_picked;
 	char			**map;	// Actual map
 	unsigned int	map_height;	// Amount of lines in the map
 	unsigned int	map_width;	// Amount of columns in the map
