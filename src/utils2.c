@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_texture.c                                      :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simonwautelet <simonwautelet@student.42    +#+  +:+       +#+        */
+/*   By: npinheir <npinheir@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/09 13:53:32 by swautele          #+#    #+#             */
-/*   Updated: 2022/06/15 22:15:31 by simonwautel      ###   ########.fr       */
+/*   Created: 2022/06/16 23:54:31 by npinheir          #+#    #+#             */
+/*   Updated: 2022/06/17 01:46:42 by npinheir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	get_color_from_img(t_data *img, int x, int y)
+char	*space_string(size_t len, t_param *world)
 {
-	char	*dst;
+	char	*res;
+	size_t	i;
 
-	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
-	return (*(unsigned int *)dst);
+	i = 0;
+	res = malloc(sizeof(char) * len + 1);
+	if (!res)
+		error_exit("Malloc error ", world, NULL, -1);
+	while (i < len)
+		res[i++] = 'v';
+	res[i] = '\0';
+	return (res);
 }

@@ -6,15 +6,19 @@
 /*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:19:31 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/17 13:25:37 by swautele         ###   ########.fr       */
+/*   Updated: 2022/06/17 16:50:00 by swautele         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/*   Updated: 2022/06/17 01:49:33 by npinheir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	init_world(t_param *world)
+static void	debug(t_param *world)
 {
-	/*	Clean init of the game structure	*/
+	int	i;
 
 	world->px_x_pos = 0;
 	world->px_y_pos = 0;
@@ -53,18 +57,32 @@ void	init_world(t_param *world)
 	world->keyfound = FALSE;
 	world->key_picked = FALSE;
 	world->flag_anim = 0;
+	i = 0;
+	printf(" ===== START DEBUG ===== \n");
+	while (world->map[i])
+		printf("%s\n", world->map[i++]);
+	printf("-----------------------------\n");
+	printf("Player px x pos : %f\n", world->px_x_pos);
+	printf("Player px y pos : %f\n", world->px_y_pos);
+	printf("Player map x pos : %d\n", world->map_x_pos);
+	printf("Player map y pos : %d\n", world->map_y_pos);
+	printf("Player orientation : %d\n", world->orient);
+	printf("-----------------------------\n");
+	printf("Map height : %d\n", world->map_height);
+	printf("Map width : %d\n", world->map_width);
+	printf("-----------------------------\n");
+	printf("Map start : %d\n", world->map_start);
+	printf("-----------------------------\n");
+	printf("Map .cub path : %s\n", world->path);
+	printf("Map NO path : %s\n", world->no);
+	printf("Map SO path : %s\n", world->so);
+	printf("Map WE path : %s\n", world->we);
+	printf("Map EA path : %s\n", world->ea);
+	printf("-----------------------------\n");
+	printf("Map floor color : %d\n", world->floor_color);
+	printf("Map ceiling color : %d\n", world->ceiling_color);
+	printf(" ===== END DEBUG ===== \n");
 }
-
-// static void	output_tests(t_param *world)
-// {
-// 	/*	Outputs some verification tests	*/
-
-// 	int	i = 0;
-// 	while (world->map[i])
-// 		printf("%s\n", world->map[i++]);
-// 	printf("Player (%d;%d), orientation : %d\n", world->map_x_pos, world->map_y_pos, world->orient);
-// 	printf("Player (%d;%d), orientation : %d\n", world->px_x_pos, world->px_y_pos, world->orient);
-// }
 
 int	main(int argc, char **argv)
 {
@@ -72,18 +90,17 @@ int	main(int argc, char **argv)
 
 	world = NULL;
 	if (argc != 2)
-		error_exit("[USAGE] ./cub3D <map.cub> ", world);
+		error_exit("[USAGE] ./cub3D <map.cub>", world, NULL, -1);
 	world = malloc(sizeof(t_param));
 	if (world)
 	{
 		init_world(world);
 		cub_file_check_and_fill(world, argv[1]);
-		world->px_x_pos = (world->map_x_pos) + 0.5;
-		world->px_y_pos = (world->map_y_pos) + 0.5;
-		// world->wall_color = create_trgb(0, 0, 0, 255);
-		//output_tests(world);
-		init_window(world);
-		//free(world);
+		debug(world);
+		lets_cub(world);
+		system("leaks cub3D");
 	}
+	else
+		error_exit("Malloc error", world, NULL, -1);
 	return (0);
 }

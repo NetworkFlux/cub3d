@@ -6,7 +6,7 @@
 /*   By: npinheir <npinheir@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 08:12:19 by npinheir          #+#    #+#             */
-/*   Updated: 2021/08/28 19:10:16 by npinheir         ###   ########.fr       */
+/*   Updated: 2022/06/16 19:43:59 by npinheir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ char	**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	nb_words = countwords(s, c);
+	if (nb_words == 0)
+		return (NULL);
 	res = malloc(sizeof(char *) * (nb_words + 1));
 	if (!res)
 		return (NULL);

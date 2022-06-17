@@ -5,17 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: simonwautelet <simonwautelet@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+<<<<<<< HEAD
 /*   Created: 2022/05/31 16:34:50 by npinheir          #+#    #+#             */
 /*   Updated: 2022/06/17 15:30:31 by simonwautel      ###   ########.fr       */
+=======
+/*   Created: 2022/06/16 19:11:38 by npinheir          #+#    #+#             */
+/*   Updated: 2022/06/17 01:48:10 by npinheir         ###   ########.fr       */
+>>>>>>> norm_version
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int		extention_check(const char *path)
+int	extention_check(const char *path)
 {
-	/*	Checks if the extension (.cub) is valid.	*/
-
 	char	*extention;
 	size_t	len;
 
@@ -90,17 +93,17 @@ void	extract_file( t_param *world, int fd)
 
 void	cub_file_check_and_fill(t_param *world, char *path)
 {
-	/*	Handels the entire extraction based on the the .cub file path.	*/
-	
-	int		fd;
-	world->path = path;
+	int	fd;
+
 	fd = open(path, O_DIRECTORY);
 	if (fd != -1)
-		error_exit("This is a directory ", world);
+		error_exit("This is a directory", world, NULL, -1);
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
-		error_exit("Failed to open the .cub file ", world);
+		error_exit("Failed to open the .cub file", world, NULL, -1);
 	if (extention_check(path))
-		error_exit("Not a .cub file ", world);
+		error_exit("Not a .cub file", world, NULL, fd);
+	world->path = ft_strdup(path);
 	extract_file(world, fd);
+	close(fd);
 }

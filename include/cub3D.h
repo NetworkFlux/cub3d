@@ -5,8 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+<<<<<<< HEAD
 /*   Created: 2022/06/08 14:22:12 by npinheir          #+#    #+#             */
 /*   Updated: 2022/06/17 13:29:27 by swautele         ###   ########.fr       */
+=======
+/*   Created: 2022/06/16 19:00:37 by npinheir          #+#    #+#             */
+/*   Updated: 2022/06/17 13:16:34 by swautele         ###   ########.fr       */
+>>>>>>> norm_version
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +29,6 @@
 # include <limits.h>
 # include <float.h>
 
-# define SIZE 64
 # define ANGLEVISION 60
 # define ECAR 0.025
 // # define NBRAY ANGLEVISION / ECAR // ANGLEVISION / ECAR
@@ -53,7 +57,7 @@ typedef enum e_dir{
 	EN = 6,
 }	t_dir;
 
-typedef	struct s_data
+typedef	struct s_img
 {
 	void	*img;
 	char	*addr;
@@ -62,7 +66,7 @@ typedef	struct s_data
 	int		endian;
 	int		y_size;
 	int		x_size;
-}	t_data;
+}	t_img;
 
 typedef struct s_param
 {
@@ -122,70 +126,73 @@ int		draw_view(t_param *world);
 void	draw_col(t_param *world, double dist, double offset, double x_wall);
 void	draw_key(t_param *world, double offset, double dist);
 
-// Hooks
-int		keyboard_press(int keycode, t_param *world);
-int		keyboard_release(int keycode, t_param *world);
-int		keyboard(t_param *world);
-int		mouse_gest(int x, int y, t_param *world);
-void	move_forward(t_param *world);
-void	move_left(t_param *world);
-void	move_right(t_param *world);
-void	move_back(t_param *world);
+	int				floor_color;
+	int				ceiling_color;
 
-// Minimap
-void	draw_minimap(t_param *world);
-void	paint_square_map(unsigned int x, unsigned int y, unsigned int square_length, t_param *world);
-void	draw_player_nose(t_param *world, unsigned int square_length);
+	int				*counter;	// Malloc
 
-// Distance
-double	calcul_dist_till_wall(t_param *world, double orientation, double *x_wall);
-double	next_vert_wall(t_param *world, double orientation, double *vert_x_wall, int *sub_door_vert);
-double	next_hor_wall(t_param *world, double orientation, double *hor_x_wall, int *sub_door_hor);
 
-// Walls
-int		check_left_wall(double y, double x, t_param *world);
-int		check_right_wall(double y, double x, t_param *world);
-int		check_up_wall(double y, double x, t_param *world);
-int		check_down_wall(double y, double x, t_param *world);
+	void			*instance;
+	void			*window;
+	t_img			*img;	// Malloc
+	t_img			*texture; // Malloc
+	t_img			*calque;	// Malloc
 
-// .cub file
+
+	int				nb_ray;
+}	t_param;
+
+// -- Cube File --
 void	cub_file_check_and_fill(t_param *world, char *path);
 int		extention_check(const char *path);
-void	extract_file( t_param *world, int fd);
 
-// Map extractor
-void	map_data_check(t_param *world, const char *holder);
-int		valid_map_line(const char *holder);
-void	extract_map(t_param *world);
+// -- Let's Cub --
+void	lets_cub(t_param *world);
+int		keyboard_press(int keycode, t_param *world);
+
+// -- Player --
 void	get_player_position(t_param *world);
-void	fill_spaces(t_param *world);
-void	last_map_check(t_param *world);
 
-// File extractor
+// -- Extract File --
+void	extract_file( t_param *world, int fd);
+void	loop_in_file(t_param *world, int fd);
 void	extract_sand_rose(t_param *world, char **split);
 void	extract_f_c(t_param *world, char **split);
 
-// Utils
-int		to_hex_int(const char *str, t_param *world);
-size_t	len_array_2d(char **split);
-int		create_trgb(int t, int r, int g, int b);
-void	pixel_to_image(t_data *img, int x, int y, int color);
-int		exit_cub3d(t_param *world);
-double	degre_to_radiant(double degre);
-void	bresenham(int x0, int y0, int x1, int y1, t_param *world);
-char	*space_string(size_t len, t_param *world);
-int		get_color_from_img(t_data *img, int x, int y);
-void	check_max_int(long long int check, t_param *world);
+// -- Extract Map --
+void	extract_map(t_param *world);
+void	process_map(t_param *world, int *fd, char **holder);
+void	fill_spaces(t_param *world);
 
-// Errors
-void	error_exit(char *message, t_param *world);
+// -- Map Check --
+void	map_data_check(t_param *world, const char *holder);
+int		valid_map_line(const char *holder);
+void	last_map_check(t_param *world);
+
+// -- Init --
+void	init_world(t_param *world);
+void	init_mlx(t_param *world);
+void	init_textures(t_param *world);
+void	set_textures(t_param *world);
+
+// -- Free --
+void	free_world(t_param *world);
+void	free_split(char **split);
+
+// -- Utils --
+size_t	len_array_2d(char **split);
+int		to_hex_int(const char *str, t_param *world);
+void	check_max_int(long long int check, t_param *world);
+int		counter_check(int *counter);
+void	skip_non_map(t_param *world, int *fd, char **holder);
+
+// -- Utils 2 --
+char	*space_string(size_t len, t_param *world);
+
+// -- Errors --
+void	error_exit(char *message, t_param *world, char *str_to_free,
+	int fd_to_close);
+void	succes_exit(t_param *world, char *str_tr_free, int fd_to_close);
+void	clean_close_mlx(t_param *world);
 
 #endif
-
-//to_do
-// gnl leaks
-// free on error
-// norm
-// key
-
-
