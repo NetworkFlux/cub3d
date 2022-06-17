@@ -6,7 +6,7 @@
 /*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 19:13:03 by simonwautel       #+#    #+#             */
-/*   Updated: 2022/06/17 13:32:46 by swautele         ###   ########.fr       */
+/*   Updated: 2022/06/17 13:36:05 by swautele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,13 +192,13 @@ int	draw_view(t_param *world)
 	x_wall = 0;
 	if (world->flag_anim == FALSE)
 	{
-		if (world->offset_anim > 30)
+		if (world->offset_anim > 30 / world->player_front)
 			world->flag_anim = TRUE;
 		world->offset_anim++;
 	}
 	else if (world->flag_anim == TRUE)
 	{
-		if (world->offset_anim < -30)
+		if (world->offset_anim < -30 / world->player_front)
 			world->flag_anim = FALSE;
 		world->offset_anim--;
 	}

@@ -6,7 +6,7 @@
 /*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 13:17:04 by simonwautel       #+#    #+#             */
-/*   Updated: 2022/06/17 12:06:08 by swautele         ###   ########.fr       */
+/*   Updated: 2022/06/17 13:42:17 by swautele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ int	check_left_wall(double y, double x, t_param *world)
 		{
 			world->keyfound = TRUE;
 			world->dist_key = sqrt(pow((y + 0.5) - world->px_y_pos, 2) + pow((x + 0.5) - world->px_x_pos, 2));
-			world->x_wallkey = 1;
+			world->x_wallkey = fmod(y, 1);
+			if (world->x_wallkey == 0)
+				world->x_wallkey = 1;
 		}
 		// printf("i foudn q key dist = %f\n", world->dist_key);
 		// return (4);
@@ -58,7 +60,9 @@ int	check_right_wall(double y, double x, t_param *world)
 		{
 			world->keyfound = TRUE;
 			world->dist_key = sqrt(pow((y + 0.5) - world->px_y_pos, 2) + pow((x + 0.5) - world->px_x_pos, 2));
-			world->x_wallkey = 1;
+			world->x_wallkey = fmod(y, 1);
+			if (world->x_wallkey == 0)
+				world->x_wallkey = 1;
 		}
 		// printf("i foudn q key dist = %f\n", world->dist_key);
 		// return (4);
@@ -89,7 +93,9 @@ int	check_up_wall(double y, double x, t_param *world)
 		{
 			world->keyfound = TRUE;
 			world->dist_key = sqrt(pow((y + 0.5) - world->px_y_pos, 2) + pow((x + 0.5) - world->px_x_pos, 2));
-			world->x_wallkey = 1;
+			world->x_wallkey = fmod(x, 1);
+			if (world->x_wallkey == 0)
+				world->x_wallkey = 1;
 		}
 		// printf("i foudn q key dist = %f\n", world->dist_key);
 		// return (4);
@@ -120,7 +126,9 @@ int	check_down_wall(double y, double x, t_param *world)
 		{
 			world->keyfound = TRUE;
 			world->dist_key = sqrt(pow((y + 0.5) - world->px_y_pos, 2) + pow((x + 0.5) - world->px_x_pos, 2));
-			world->x_wallkey = 1;
+			world->x_wallkey = fmod(x, 1);
+			if (world->x_wallkey == 0)
+				world->x_wallkey = 1;
 		}
 		// printf("i foudn q key dist = %f\n", world->dist_key);
 		// return (4);
