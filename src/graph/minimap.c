@@ -6,11 +6,18 @@
 /*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 12:03:54 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/17 19:19:46 by swautele         ###   ########.fr       */
+/*   Updated: 2022/06/17 19:32:49 by swautele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+typedef struct s_fuck{
+	int	x0;
+	int	y0;
+	int	x1;
+	int	y1;
+}t_fuck;
 
 void	paint_square_map(unsigned int x, unsigned int y, unsigned int
 square_length, t_param *world)
@@ -45,6 +52,7 @@ void	draw_player_nose(t_param *world, unsigned int square_length)
 {
 	unsigned int	new_x;
 	unsigned int	new_y;
+	t_fuck			d;
 
 	if (square_length < 1)
 		square_length = 1;
@@ -56,7 +64,11 @@ void	draw_player_nose(t_param *world, unsigned int square_length)
 		new_x++;
 	if (new_y < (unsigned int)world->map_y_pos)
 		new_y++;
-	bresenham(world->map_x_pos, world->map_y_pos, new_x, new_y, world);
+	d.x0 = world->map_x_pos;
+	d.y0 = world->map_y_pos;
+	d.x1 = new_x;
+	d.y1 = new_y;
+	bresenham(d, world);
 }
 
 void	draw_player(t_param *world, unsigned int square_length)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simonwautelet <simonwautelet@student.42    +#+  +:+       +#+        */
+/*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 18:33:12 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/17 15:31:00 by simonwautel      ###   ########.fr       */
+/*   Updated: 2022/06/17 19:26:58 by swautele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,46 +79,6 @@ void	pixel_to_image(t_data *img, int x, int y, int color)
 double	degre_to_radiant(double degre)
 {
 	return (M_PI * degre / 180);
-}
-
-/*	Algorithme de Bresenham, celle-ci dessine les lignes entre
-	deux points.	*/
-
-void	bresenham(int x0, int y0, int x1, int y1, t_param * world)
-{
-	int	dx, dy, sx, sy, err, e2;
-
-	dx = abs(x1 - x0);
-	dy = abs(y1 - y0);
-	if (x0 < x1)
-		sx = 1;
-	else
-		sx = -1;
-	if (y0 < y1)
-		sy = 1;
-	else
-		sy = -1;
-	if (dx > dy)
-		err = dx / 2;
-	else
-		err = -dy / 2;
-	while (1)
-	{
-		pixel_to_image(world->calque, x0, y0, 0x00000000);
-		if (x0 == x1 && y0 == y1)
-			break ;
-		e2 = err;
-		if (e2 > -dx)
-		{
-			err -= dy;
-			x0 += sx;
-		}
-		if (e2 < dy)
-		{
-			err += dx;
-			y0 += sy;
-		}
-	}
 }
 
 char	*space_string(size_t len, t_param *world)
