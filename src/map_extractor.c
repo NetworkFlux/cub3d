@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_extractor.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simonwautelet <simonwautelet@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 11:55:03 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/15 19:54:46 by swautele         ###   ########.fr       */
+/*   Updated: 2022/06/17 15:30:48 by simonwautel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	get_player_position(t_param *world)
 		x++;
 	}
 	if (world->orient == 1000 || found > 1)
-		error_exit("Corrupted .cub file ", world);
+		error_exit("Corrupted .cub file 2", world);
 }
 
 void	fill_spaces(t_param * world)
@@ -109,14 +109,14 @@ void	last_map_check(t_param *world)
 	while (i < world->map_height)
 	{
 		if (world->map[i][0] != '1' || (world->map[i][world->map_width - 1] != '1' && world->map[i][world->map_width - 1] != 'v'))
-			error_exit("Corrupted .cub file ", world);
+			error_exit("Corrupted .cub file3", world);
 		i++;
 	}
 	i = 0;
 	while (i < world->map_width)
 	{
 		if ((world->map[0][i] != 'v' && world->map[0][i] != '1') || (world->map[world->map_height - 1][i] != '1' && world->map[world->map_height - 1][i] != 'v'))
-			error_exit("Corrupted .cub file ", world);
+			error_exit("Corrupted .cub file4", world);
 		i++;
 	}
 }
@@ -141,17 +141,17 @@ void	extract_map(t_param *world)
 	//printf("world map start : %d\n", world->map_start);
 	while (i < world->map_start - 1)
 	{
-		get_next_line(fd, &holder);
+		holder = get_next_line(fd);
 		i++;
 	}
 	i = 0;
 	//printf("map width : %d\n", world->map_width);
-	while (get_next_line(fd, &holder))
+	while ((holder = get_next_line(fd)))
 	{
 		if (valid_map_line(holder) && ft_strlen(holder) > 1)
 			world->map[i++] = ft_strjoin(holder, space_string(world->map_width - ft_strlen(holder), world));
 		else if (!valid_map_line(holder))
-			error_exit("Corrupted .cub file ", world);
+			error_exit("pted .cub file ", world);
 	}
 	world->map[i] = NULL;
 	fill_spaces(world);

@@ -3,60 +3,102 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: npinheir <npinheir@student.s19.be>         +#+  +:+       +#+        */
+/*   By: simonwautelet <simonwautelet@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/24 18:36:25 by npinheir          #+#    #+#             */
-/*   Updated: 2022/05/31 16:51:49 by npinheir         ###   ########.fr       */
+/*   Created: 2021/10/11 22:11:36 by simonwautel       #+#    #+#             */
+/*   Updated: 2022/06/17 15:25:57 by simonwautel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include"get_next_line.h"
 
-char			*ft_clean(char *str)
+size_t	ft_strlengnl(char *str)
 {
-	int			i;
-	char		*res;
+	size_t	l;
 
-	if (!str)
-		return (0);
-	i = 0;
-	while (str[i] && str[i] != '\n')
-		i++;
-	if (!(res = malloc(sizeof(char) * (i + 1))))
-		return (0);
-	i = 0;
-	while (str[i] && str[i] != '\n')
-	{
-		res[i] = str[i];
-		i++;
-	}
-	res[i] = '\0';
-	return (res);
+	l = 1;
+	while (str[l])
+		l++;
+	return (l);
 }
 
-char			*ft_clean_save(char *str)
+void	ft_delbuffer(char *buffer, int l)
 {
-	char		*res;
-	size_t		i;
-	int			j;
+	while (buffer[l])
+	{
+		buffer[l] = '\0';
+		l++;
+	}
+}
+
+char	*ft_straddback(char *result, char *buffer, ssize_t size)
+{
+	char	*newresult;
+	ssize_t	i;
+	ssize_t	l;
+
+	i = -1;
+	newresult = malloc(sizeof(char) * (size + ft_strlengnl(result) + 1));
+	if (!newresult)
+	{
+		free (result);
+		return (NULL);
+	}
+	while (result[++i])
+		newresult[i] = result[i];
+	free (result);
+	l = 0;
+	while (buffer[l] && size - l > 0)
+	{
+		newresult[i + l] = buffer[l];
+		l++;
+	}
+	if (size == l)
+		ft_delbuffer(buffer, l);
+	newresult[i + l] = '\0';
+	return (newresult);
+}
+
+int	ft_end_of_line(char *str)
+{
+	while (*str)
+	{
+		if (*str == '\n')
+		{
+			str++;
+			*str = '\0';
+			return (1);
+		}
+		str++;
+	}
+	return (0);
+}
+
+char	*ft_initialize(char *buffer)
+{
+	char		*new;
+	ssize_t		i;
+	ssize_t		l;
 
 	i = 0;
-	j = 0;
-	if (!str)
-		return (0);
-	while (str[i] && str[i] != '\n')
+	while (buffer[i] && buffer[i] != '\n')
 		i++;
-	if (!str[i])
-	{
-		free(str);
-		return (0);
-	}
-	if (!(res = malloc(sizeof(char) * ((ft_strlen(str) - i) + 1))))
-		return (0);
+	new = malloc((ft_strlengnl(&buffer[i]) + 1) * sizeof(char));
+	if (!new)
+		return (NULL);
 	i++;
-	while (str[i])
-		res[j++] = str[i++];
-	res[j] = '\0';
-	free(str);
-	return (res);
+	l = 0;
+	while (buffer[i + l])
+	{
+		new[l] = buffer[i + l];
+		buffer[l] = buffer[i + l];
+		l++;
+	}
+	new[l] = '\0';
+	while (l <= BUFFER_SIZE + 1)
+	{
+		buffer[l] = '\0';
+		l++;
+	}
+	return (new);
 }

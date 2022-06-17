@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: npinheir <npinheir@student.s19.be>         +#+  +:+       +#+        */
+/*   By: simonwautelet <simonwautelet@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/20 12:12:50 by npinheir          #+#    #+#             */
-/*   Updated: 2021/08/20 12:22:01 by npinheir         ###   ########.fr       */
+/*   Updated: 2022/06/17 15:25:09 by simonwautel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
