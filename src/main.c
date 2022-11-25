@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: swautele <swautele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: npinheir <npinheir@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:19:31 by npinheir          #+#    #+#             */
-/*   Updated: 2022/06/17 13:25:37 by swautele         ###   ########.fr       */
+/*   Updated: 2022/11/25 14:54:02 by npinheir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	init_world(t_param *world)
 	world->so = NULL;
 	world->we = NULL;
 	world->ea = NULL;
-	world->door = "./texture/hell.xpm";
+	world->door = "./texture/door.xpm";
 	world->counter = NULL;
 	world->nbray = ANGLEVISION / ECAR;
 	world->mid = ANGLEVISION / 2;

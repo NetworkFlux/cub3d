@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 # Name of the program
-NAME = cub3D
+NAME = cub3d
 
 # Compiling flags
 FLAGS = -Wall -Wextra -Werror -Iinclude
@@ -52,7 +52,7 @@ all: obj $(LIBFT) $(MINLBX) $(NAME)
 
 obj:
 	@mkdir -p $(OBJ_DIR)
-	@echo "\t$(GREEN)✔ Object folder created in cub3D !$(NONE)"
+	@echo "\t$(GREEN)✔ Object folder created in cub3d !$(NONE)"
 	
 $(OBJ_DIR)%.o:$(SRC_DIR)%.c $(HEADER)
 	@gcc $(FLAGS) -I $(MINLBX_DIR) -I $(LIBFT_DIR) -I $(INC_DIR) -o $@ -c $<
@@ -66,7 +66,7 @@ $(MINLBX):
 # Compiling
 $(NAME): $(OBJ)
 	@gcc $(OBJ) $(LNK) -lm -o $(NAME)
-	@echo "\t$(GREEN)✔ cub3D ready to run !$(NONE)"
+	@echo "\t$(GREEN)✔ cub3d ready to run !$(NONE)"
 
 # clean rule
 clean:
