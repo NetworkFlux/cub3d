@@ -1,6 +1,9 @@
 # -- cub3d --
 
 ## Usage (mac only) -- 👈
+
+<img src="https://github.com/NetworkFlux/cub3d/blob/main/imgs/example.png">
+
 ```bash
 git clone https://github.com/NetworkFlux/cub3d.git && cd cub3d && make && ./cub3d maps/main_map.cub
 ```
@@ -14,7 +17,7 @@ git clone https://github.com/NetworkFlux/cub3d.git && cd cub3d && make && ./cub3
 This project is about trying to recreate de functionalities of the famous game : Wolfenstein3D.
 
 ## Objectives -- ✅
-This program will launch a game instance depending on the map given as parameter. The program handels
+This program will launch a game instance depending on the map given as parameter. The program handels :
 - Minimap
 - Texture choices
 - Sprite interactions
@@ -22,7 +25,10 @@ This program will launch a game instance depending on the map given as parameter
 ## Rules -- 🚨
 The maps must be defined as follows :
 
-<img src="https://github.com/NetworkFlux/minishell/blob/main/imgs/compile.png">
+<img src="https://github.com/NetworkFlux/cub3d/blob/main/imgs/map_example.png">
+
+Where :
+- 
 
 ## Help -- ⏳
 You might get this error at compilation :
